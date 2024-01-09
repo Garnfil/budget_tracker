@@ -62,17 +62,16 @@
                             <div class="card border-grey border-lighten-3 m-0">
                                 <div class="card-header border-0">
                                     <div class="card-title text-center">
-                                        <div class="p-1"><img
-                                                src="../../../app-assets/images/logo/stack-logo-dark.png"
-                                                alt="branding logo"></div>
+                                        <div class="p-1">Budget Tracker</div>
                                     </div>
                                     <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
                                         <span>Login with
-                                            Stack</span></h6>
+                                            Budget Tracker</span>
+                                    </h6>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        @if(Session::get('success'))
+                                        @if (Session::get('success'))
                                             <div class="alert alert-success">
                                                 {{ Session::get('success') }}
                                             </div>
@@ -82,18 +81,23 @@
                                             @csrf
                                             <fieldset class="form-group position-relative has-icon-left mb-0">
                                                 <input type="text" class="form-control form-control-lg"
-                                                    id="user-name" name="email" placeholder="Your Email" required>
+                                                    id="user-name" name="email" placeholder="Your Email">
                                                 <div class="form-control-position">
                                                     <i class="feather icon-user"></i>
                                                 </div>
+                                                @if ($errors->has('email'))
+                                                    <div class="danger text-danger">{{ $errors->first('email') }}</div>
+                                                @endif
                                             </fieldset>
                                             <fieldset class="form-group position-relative has-icon-left">
                                                 <input type="password" class="form-control form-control-lg"
-                                                    id="user-password" name="password" placeholder="Enter Password"
-                                                    required>
+                                                    id="user-password" name="password" placeholder="Enter Password">
                                                 <div class="form-control-position">
                                                     <i class="fa fa-key"></i>
                                                 </div>
+                                                @if ($errors->has('password'))
+                                                    <div class="danger text-danger">{{ $errors->first('password') }}</div>
+                                                @endif
                                             </fieldset>
                                             <div class="form-group row">
                                                 <div class="col-sm-6 col-12 text-center text-sm-left">

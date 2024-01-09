@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +17,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-})->middleware(['verified', 'auth']);
+    return redirect()->route('login');
+});
+
+// Route::get('admin-login', )
+
+Route::group(['middleware' => ['verified', 'auth'], 'prefix' => 'account'], function () {
+    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+    Route::resource('clients', ClientController::class);
+
+    Route::resource('admins', AdminController::class);
+});
