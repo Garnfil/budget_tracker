@@ -149,6 +149,7 @@
           // alter the remote JSON data, except to indicate that infinite
           // scrolling can be used
           params.page = params.page || 1;
+          console.log(data);
 
           return {
             results: data.items,

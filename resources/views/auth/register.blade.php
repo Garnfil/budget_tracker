@@ -59,8 +59,7 @@
                             <div class="card border-grey border-lighten-3 px-2 py-2 m-0">
                                 <div class="card-header border-0">
                                     <div class="card-title text-center">
-                                        <img src="../../../app-assets/images/logo/stack-logo-dark.png"
-                                            alt="branding logo">
+                                        BUDGET TRACKER
                                     </div>
                                     <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
                                         <span>Create

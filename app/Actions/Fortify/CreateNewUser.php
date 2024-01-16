@@ -2,6 +2,8 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\AdminDetail;
+use App\Models\ClientDetail;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -29,10 +31,26 @@ class CreateNewUser implements CreatesNewUsers
             ],
             'password' => $this->passwordRules(),
         ])->validate();
+        
+        $user_count = User::count();
 
-        return User::create([
+        $user = User::create([
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'role_id' => $user_count == 0 ? 1 : 3
         ]);
+
+        if($user_count == 0) {
+            AdminDetail::create([
+                'user_id' => $user->id
+            ]);
+        } else {
+            ClientDetail::create([
+                'user_id' => $user->id
+            ]);
+        }
+        
+
+        return $user;
     }
 }
