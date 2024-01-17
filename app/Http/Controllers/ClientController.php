@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\ClientDataTable;
 use App\Http\Requests\Client\StoreRequest;
+use App\Http\Requests\Client\UpdateRequest;
 use App\Models\ClientDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -63,15 +64,23 @@ class ClientController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $client = ClientDetail::where('id', $id)->with("user")->firstOrFail();
+        return view('clients.edit', compact('client'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(UpdateRequest $request, string $id)
+    {   
+        $data = $request->validated();
+        
+        $client = ClientDetail::where('id', $id)->firstOrFail();
+
+        $client->update($data);
+        $client->user->update($data);
+
+        return back()->withSuccess('Client Edited Successfully');
     }
 
     /**

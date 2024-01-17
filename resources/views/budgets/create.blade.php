@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            .mb
+                            
                         </div>
                     </div>
                 </form>

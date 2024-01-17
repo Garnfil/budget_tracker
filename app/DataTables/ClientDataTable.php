@@ -24,7 +24,7 @@ class ClientDataTable extends DataTable
         $dataTables = (new EloquentDataTable($query))
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
-                return '<a href="#" class="btn btn-md btn-primary"><i class="feather icon-edit"></i></a>';
+                return '<a href="'.route('clients.edit', $row->id).'" class="btn btn-md btn-primary"><i class="feather icon-edit"></i></a>';
             })
             ->editColumn('user_id', function ($row) {
                 return optional($row->user)->email;

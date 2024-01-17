@@ -44,7 +44,7 @@ class BudgetController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
