@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\BudgetDataTable;
+use App\Http\Requests\Budget\StoreRequest;
+use App\Http\Requests\Budget\UpdateRequest;
+use App\Models\Budget;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -26,11 +29,14 @@ class BudgetController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in database.
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(StoreRequest $request)
+    {   
+        $data = $request->validated();
+        $budget = Budget::create($data);
+
+        return redirect()->route('budgets.edit', $budget->id)->withSuccess("Budget added successfully.");
     }
 
     /**
@@ -45,20 +51,26 @@ class BudgetController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
-        
+    {   
+        $clients = User::where('role', 'client')->get();
+        $budget = Budget::findOrFail($id);
+        return view('budgets.edit', compact('budget', 'clients'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in database.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(UpdateRequest $request, string $id)
+    {   
+        $data = $request->validated();
+        $budget = Budget::findOrFail($id);
+        $budget->update($data);
+
+        return back()->withSuccess('Budget updated successfully.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from database.
      */
     public function destroy(string $id)
     {

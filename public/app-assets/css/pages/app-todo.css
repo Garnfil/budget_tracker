@@ -38,7 +38,7 @@
           position: relative;
           height: calc(100% - 5.4rem); }
           .todo-application .sidebar .todo-sidebar .todo-app-menu .sidebar-menu-list .filter-label {
-            font-family: "Montserrat", Georgia, "Times New Roman", Times, serif;
+            font-family: "Inter", Georgia, "Times New Roman", Times, serif;
             letter-spacing: 1px;
             color: #bac0c7; }
           .todo-application .sidebar .todo-sidebar .todo-app-menu .sidebar-menu-list .list-group .list-group-item {
@@ -85,7 +85,7 @@
       .todo-application .todo-new-task-sidebar .close-icon i {
         font-size: 1.75rem; }
     .todo-application .todo-new-task-sidebar .task-title {
-      font-family: "Montserrat", Georgia, "Times New Roman", Times, serif;
+      font-family: "Inter", Georgia, "Times New Roman", Times, serif;
       font-size: 1.1rem; }
     .todo-application .todo-new-task-sidebar .assigned .select-box .select2-container .select2-selection--single {
       border-color: #E4E7ED !important; }
@@ -169,7 +169,7 @@
       border-top-right-radius: 0.25rem; }
       .todo-application .content-right .todo-app-list-wrapper .todo-fixed-search input {
         border: 0;
-        font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
         .todo-application .content-right .todo-app-list-wrapper .todo-fixed-search input:focus {
           box-shadow: none; }
       .todo-application .content-right .todo-app-list-wrapper .todo-fixed-search .todo-sort .sorting {
@@ -216,7 +216,7 @@
               opacity: 1;
               transition: all .35s ease 0s !important; }
           .todo-application .content-right .todo-app-list-wrapper .todo-app-list .todo-task-list .todo-task-list-wrapper .todo-item .todo-title {
-            font-family: "Montserrat", Georgia, "Times New Roman", Times, serif;
+            font-family: "Inter", Georgia, "Times New Roman", Times, serif;
             color: #404e67; }
           .todo-application .content-right .todo-app-list-wrapper .todo-app-list .todo-task-list .todo-task-list-wrapper .todo-item .todo-item-favorite,
           .todo-application .content-right .todo-app-list-wrapper .todo-app-list .todo-task-list .todo-task-list-wrapper .todo-item .todo-item-delete {

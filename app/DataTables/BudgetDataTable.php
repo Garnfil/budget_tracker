@@ -23,21 +23,28 @@ class BudgetDataTable extends DataTable
     {
         $dataTables = (new EloquentDataTable($query))
             ->addColumn('action', 'budget.action')->addColumn('action', function ($row) {
-                return '<a href="' .route('budgets.edit', $row->id). '" class="btn btn-md btn-primary"><i class="feather icon-edit"></i></a>';
+                return '<a href="' .route('budgets.edit', $row->id). '" class="btn btn-sm btn-primary"><i class="feather icon-edit"></i></a>
+                        <button data-id="' .$row->id. '" class="btn btn-sm btn-danger"><i class="feather icon-trash"></i></button>';
             })
             ->editColumn('user_id', function ($row) {
-                return optional($row->user)->email;
+                return optional($row->user)->name ?? optional($row->user)->email;
+            })
+            ->editColumn('initial_balance', function($row) {
+                return '₱' . ' ' . number_format($row->initial_balance, 2);
+            })
+            ->editColumn('net_disposable_income', function($row) {
+                return '₱' . ' ' . number_format($row->net_disposable_income, 2);
             })
             ->editColumn('date_duration', function ($row) {
                 $output = '';
                 if($row->start_date) {
-                    $output .= $row->start_date->format('F d, Y');
+                    $output .= $row->start_date->format('M d, Y');
                 }
 
-                $output .= ' ';
+                $output .= ' - ';
 
                 if($row->end_date) {
-                    $output .= $row->end_date->format('F d, Y');
+                    $output .= $row->end_date->format('M d, Y');
                 }
                 
                 return $output;
@@ -92,11 +99,12 @@ class BudgetDataTable extends DataTable
             Column::make('id'),
             Column::make('client')->data('user_id')->name('user_id')->title('Client'),
             Column::make('initial_balance'),
+            Column::make('net_disposable_income'),
             Column::make('date_duration')->date('date_duration')->name('date_duration')->title('Date Duration'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(60)
+                ->width(70)
                 ->addClass('text-center'),
         ];
     }

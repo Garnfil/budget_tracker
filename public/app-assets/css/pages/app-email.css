@@ -112,10 +112,10 @@
             font-size: 1.75rem; }
         .email-application .app-content .content-right .email-app-list-wrapper .email-app-list .email-action .action-right .email-fixed-search input {
           border-color: #E6E6E6;
-          font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+          font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
           .email-application .app-content .content-right .email-app-list-wrapper .email-app-list .email-action .action-right .email-fixed-search input::placeholder {
             font-size: 1rem;
-            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
         .email-application .app-content .content-right .email-app-list-wrapper .email-app-list .email-action .action-right .email-fixed-search .form-control-position {
           top: 3px; }
       .email-application .app-content .content-right .email-app-list-wrapper .email-app-list .email-action .action-right .email-pagination-next,
@@ -10278,12 +10278,12 @@
                 .email-application .app-content .content-right .email-app-details .email-scroll-area .email-detail-head .collapse-header .card-header .information .dropdown-menu .dropdown-item {
                   margin-right: 0.5rem; }
   .email-application .app-content .sidebar-label {
-    font-family: "Montserrat", Georgia, "Times New Roman", Times, serif;
+    font-family: "Inter", Georgia, "Times New Roman", Times, serif;
     letter-spacing: 1px;
     color: #98a4b8;
     margin: 1.8rem 0 0.5rem 1rem; }
   .email-application .app-content .attchement-text {
-    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
   .email-application .app-content .action-icon {
     padding: 0.35rem 0.5rem;
     border: 1px solid #E6E6E6; }
