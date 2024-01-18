@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\BudgetDataTable;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BudgetController extends Controller
@@ -19,8 +20,9 @@ class BudgetController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        return view('budgets.create');
+    {   
+        $clients = User::where('role', 'client')->get();
+        return view('budgets.create', compact('clients'));
     }
 
     /**

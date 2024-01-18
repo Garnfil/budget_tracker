@@ -37,7 +37,7 @@ class ClientController extends Controller
         $data = $request->validated();
 
         $user = User::create(array_merge($data, [
-            'role_id' => 3, 
+            'role' => 'client', 
             'name' => $request->firstname . ' ' . $request->lastname,
             'email_verified_at' => $request->has('is_verify') ? now() : null
         ]));

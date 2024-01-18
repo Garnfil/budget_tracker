@@ -38,14 +38,25 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="mb-3">
-                                <label for="user_id" class="form-label">User</label>
+                                <label for="user_id" class="form-label">Client</label>
                                 <select name="user_id" id="user_id" class="form-control select2">
-
+                                    <option value="">--- SELECT CLIENT ---</option>
+                                    @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}">{{ $client->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            
+                            <div class="mb-3">
+                                <label for="initial_balance" class="form-label">Initial Balance</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">₱</span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Initial Balance" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>

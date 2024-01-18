@@ -37,7 +37,7 @@ class CreateNewUser implements CreatesNewUsers
         $user = User::create([
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            'role_id' => $user_count == 0 ? 1 : 3
+            'role' => $user_count == 0 ? 'super admin' : 'client',
         ]);
 
         if($user_count == 0) {

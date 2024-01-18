@@ -31,8 +31,7 @@ return new class extends Migration {
             $table->string('password');
             $table->string('country_phone_code', 3)->nullable();
             $table->string('contact_number', 11)->nullable();
-            $table->unsignedInteger('role_id')->nullable()->index('user_admin_id_foreign');
-            $table->foreign(['role_id'])->references(['id'])->on('roles')->onUpdate('SET NULL')->onDelete('SET NULL');
+            $table->string('role')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -140,7 +139,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        $roles = ['Super Admin', 'Admin', 'Client'];
+        $roles = ['super admin', 'admin', 'client'];
 
         foreach ($roles as $key => $role) {
             Role::create([
