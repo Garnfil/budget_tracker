@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin-layout.app')
 
 @section('title', 'Edit Expense Category')
 
@@ -85,7 +85,7 @@
                             </div>
                         </div>
                         <hr>
-                        <button class="btn btn-primary">Save Income Category</button>
+                        <button class="btn btn-primary">Save Expense Category</button>
                     </form>
                 </div>
             </div>

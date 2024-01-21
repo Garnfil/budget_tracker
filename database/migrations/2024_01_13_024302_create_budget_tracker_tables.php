@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->string('slug');
             $table->timestamps();
         });
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
@@ -42,21 +43,21 @@ return new class extends Migration {
             $table->timestamp('created_at')->nullable();
         });
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->text('two_factor_secret')
-                ->after('password')
-                ->nullable();
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->text('two_factor_secret')
+        //         ->after('password')
+        //         ->nullable();
 
-            $table->text('two_factor_recovery_codes')
-                ->after('two_factor_secret')
-                ->nullable();
+        //     $table->text('two_factor_recovery_codes')
+        //         ->after('two_factor_secret')
+        //         ->nullable();
 
-            if (Fortify::confirmsTwoFactorAuthentication()) {
-                $table->timestamp('two_factor_confirmed_at')
-                    ->after('two_factor_recovery_codes')
-                    ->nullable();
-            }
-        });
+        //     if (Fortify::confirmsTwoFactorAuthentication()) {
+        //         $table->timestamp('two_factor_confirmed_at')
+        //             ->after('two_factor_recovery_codes')
+        //             ->nullable();
+        //     }
+        // });
 
         Schema::create('failed_jobs', function (Blueprint $table) {
             $table->id();
@@ -69,14 +70,14 @@ return new class extends Migration {
         });
         Schema::create('admin_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id')->nullable()->index('user_admin_id_foreign');
-            $table->foreign(['user_id'])->references(['id'])->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->unsignedBigInteger('user_id')->index();
+            $table->foreign(['user_id'])->references(['id'])->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
         Schema::create('client_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id')->nullable()->index('user_admin_id_foreign');
-            $table->foreign(['user_id'])->references(['id'])->on('users')->onUpdate('CASCADE')->onDelete('SET NULL');
+            $table->unsignedBigInteger('user_id')->index();
+            $table->foreign(['user_id'])->references(['id'])->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->date('birthdate')->nullable();
             $table->string('gender')->nullable();
             $table->string('address')->nullable();
@@ -84,7 +85,7 @@ return new class extends Migration {
         });
         Schema::create('budgets', function (BluePrint $table) {
             $table->id();
-            $table->unsignedInteger('user_id')->nullable()->index('user_id_foreign');
+            $table->unsignedBigInteger('user_id')->index('budgets_user_id_foreign');
             $table->foreign(['user_id'])->references(['id'])->on('users')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->date('start_date');
             $table->date('end_date');
@@ -98,7 +99,7 @@ return new class extends Migration {
         });
         Schema::create('expense_categories', function (BluePrint $table) {
             $table->id();
-            $table->unsignedInteger('budget_id')->index('budget_id_foreign');
+            $table->unsignedBigInteger('budget_id')->index('expense_categories_budget_id_foreign');
             $table->foreign(['budget_id'])->references(['id'])->on('budgets')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->string('name');
             $table->double('budgeted_amount', 10, 2);
@@ -107,20 +108,20 @@ return new class extends Migration {
         });
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('budget_id')->index('budget_id_foreign');
-            $table->foreign(['budget_id'])->references(['id'])->on('budgets')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->unsignedBigInteger('budget_id')->index('budget_id_foreign');
+            $table->foreign(['budget_id'])->references('id')->on('budgets')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->unsignedInteger('expense_category_id')->index('expense_category_id_foreign');
-            $table->foreign(['expense_category_id'])->references(['id'])->on('expense_categories')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->unsignedBigInteger('expense_category_id')->nullable()->index('expenses_expense_category_id_foreign');
+            $table->foreign(['expense_category_id'])->references(['id'])->on('expense_categories')->onUpdate('CASCADE')->onDelete('SET NULL');
             $table->double('amount', 10, 2);
             $table->dateTime('transaction_datetime');
             $table->timestamps();
         });
         Schema::create('income_categories', function (BluePrint $table) {
             $table->id();
-            $table->unsignedInteger('budget_id')->index('budget_id_foreign');
-            $table->foreign(['budget_id'])->references(['id'])->on('budgets')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->unsignedBigInteger('budget_id')->index('income_categories_budget_id_foreign');
+            $table->foreign('budget_id')->references('id')->on('budgets')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->string('name');
             $table->double('goal_amount', 10, 2);
             $table->text('note')->nullable();
@@ -128,12 +129,12 @@ return new class extends Migration {
         });
         Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('budget_id')->index('budget_id_foreign');
+            $table->unsignedBigInteger('budget_id')->index('budget_id_foreign');
             $table->foreign(['budget_id'])->references(['id'])->on('budgets')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->unsignedInteger('income_category_id')->index('income_category_id_foreign');
-            $table->foreign(['income_category_id'])->references(['id'])->on('income_categories')->onUpdate('CASCADE')->onDelete('CASCADE');
+            $table->unsignedBigInteger('income_category_id')->nullable()    ->index('incomes_income_category_id_foreign');
+            $table->foreign(['income_category_id'])->references(['id'])->on('income_categories')->onUpdate('CASCADE')->onDelete('SET NULL');
             $table->double('amount', 10, 2);
             $table->dateTime('transaction_datetime');
             $table->timestamps();
@@ -156,14 +157,6 @@ return new class extends Migration {
         Schema::dropIfExists('roles');
         Schema::dropIfExists('permissions');
         Schema::dropIfExists('password_reset_tokens');
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(array_merge([
-                'two_factor_secret',
-                'two_factor_recovery_codes',
-            ], Fortify::confirmsTwoFactorAuthentication() ? [
-                    'two_factor_confirmed_at',
-                ] : []));
-        });
         Schema::dropIfExists('users');
         Schema::dropIfExists('failed_jobs');
         Schema::dropIfExists('admin_details');

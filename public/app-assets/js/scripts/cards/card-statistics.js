@@ -823,8 +823,8 @@
 
   var general_task_radial_bar_chart_options = {
     chart: {
-      height: 145,
-      width: 170,
+      height: 300,
+      width: 350,
       type: 'radialBar',
       offsetY: 30,
       toolbar: {

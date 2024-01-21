@@ -36,6 +36,12 @@ class ExpenseCategoryController extends Controller
         $data = $request->validated();
         $expense_category = ExpenseCategory::create($data);
 
+        $budget = Budget::where('id', $expense_category->budget_id)->first();
+
+        $budget->update([
+            'total_budgeted' => $budget->total_budgeted + $expense_category->budgeted_amount
+        ]);
+
         return redirect()->route('expense-categories.edit', $expense_category->id)->with('Expense Category added successfully.');
     }
 
@@ -65,7 +71,17 @@ class ExpenseCategoryController extends Controller
     {   
         $data = $request->validated();
         $expense_category = ExpenseCategory::where('id', $id)->first();
+        $budget = Budget::where('id', $expense_category->budget_id)->first();
+        
+        $budget->update([
+            'total_budgeted' => $budget->total_budgeted - $expense_category->budgeted_amount
+        ]);
+
         $expense_category->update($data);
+
+        $budget->update([
+            'total_budgeted' => $budget->total_budgeted + $expense_category->budgeted_amount
+        ]);
 
         return back()->withSuccess('Expense category updated successfully.');
     }
@@ -76,5 +92,20 @@ class ExpenseCategoryController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function lookup(Request $request) {
+        $type = $request->type;
+
+        $expense_categories = ExpenseCategory::select('id', 'name', 'budget_id')->where('name', 'like', $request->q . '%')->get();
+
+        if($type == 'budget') {
+            $expense_categories = ExpenseCategory::select('id', 'name', 'budget_id')->where('budget_id', $request->q)->get();
+        }
+
+        return [
+            'status' => TRUE,
+            'expense_categories' => $expense_categories
+        ];
     }
 }

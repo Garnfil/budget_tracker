@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(( auth()->user()->role = 'client' ? 'layouts.client-layout.app' : 'layouts.admin-layout.app' ))
 
 @section('title', 'Edit Budget')
 
@@ -102,9 +102,45 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label for="description" class="form-label">Description</label>
-                                            <textarea name="desription" id="description-field" cols="30" rows="3" class="form-control">{{ $budget->description }}</textarea>
+                                            <textarea name="desription" id="description-field" cols="30" rows="1" class="form-control">{{ $budget->description }}</textarea>
                                             <div class="text-danger danger">@error('description'){{ $message }}@enderror</div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="net-disposable-income-field" class="form-label">Net Disposable Income</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="currency-symbol">₱</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Net Disposable Income"
+                                            aria-describedby="currency-symbol" name="net_disposable_income" value="{{ $budget->net_disposable_income }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="net-disposable-income-field" class="form-label">Total Expenditure</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="currency-symbol">₱</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Total Expenditure"
+                                            aria-describedby="currency-symbol" name="total_expenditure" value="{{ $budget->total_expenditure }}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="net-disposable-income-field" class="form-label">Total Budgeted</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="currency-symbol">₱</span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Total Budgeted"
+                                            aria-describedby="currency-symbol" name="total_budgeted" value="{{ $budget->total_budgeted }}" disabled>
                                     </div>
                                 </div>
                             </div>

@@ -74,6 +74,28 @@ class IncomeCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $income_category = IncomeCategory::findOrFail($id);
+
+        $income_category->delete();
+
+        return response([
+            'status' => TRUE,
+            'message' => 'Income Category deleted successfully.'
+        ], 200);
+    }
+
+    public function lookup(Request $request) {
+        $type = $request->type;
+
+        $income_categories = IncomeCategory::select('id', 'name', 'budget_id')->where('name', 'like', $request->q . '%')->get();
+
+        if($type == 'budget') {
+            $income_categories = IncomeCategory::select('id', 'name', 'budget_id')->where('budget_id', $request->q)->get();
+        }
+
+        return [
+            'status' => TRUE,
+            'income_categories' => $income_categories
+        ];
     }
 }

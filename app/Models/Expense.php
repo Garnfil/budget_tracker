@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Expense extends Model
 {
@@ -18,4 +19,12 @@ class Expense extends Model
         "amount",
         "transaction_datetime"
     ];
+
+    public function budget() : BelongsTo {
+        return $this->belongsTo(Budget::class, 'budget_id');
+    }
+
+    public function expense_category() : BelongsTo {
+        return $this->belongsTo(ExpenseCategory::class, 'expense_category_id');
+    }
 }

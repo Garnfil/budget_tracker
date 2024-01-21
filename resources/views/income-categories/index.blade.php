@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin-layout.app')
 
 @section('title', 'Income Categories')
 
@@ -49,8 +49,7 @@
 
 @push('scripts')
     @include('sections.datatable_js')
-    <script>
-
+    <script>        
         $('#income-category-table').on('preXhr.dt', function(e, setting, data) {
             var searchText = $('#search-text-field').val();
 
@@ -63,6 +62,22 @@
 
         $('#search-text-field').on('input', function(e) {
             showTable();
+        })
+
+        // For deleting data
+        $('#income-category-table').on('click', '.delete-btn', function (e) {
+            let data_id = $(this).attr('data-id');
+            renderSweetAlert({
+                title: 'Are you sure you want to delete?',
+                ajax: {
+                    url: `{{ route('income-categories.destroy', '') }}/${data_id}`,
+                    method: "DELETE",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                    },
+                },
+                onRunFunction: showTable,
+            }) 
         })
     </script>
 @endpush

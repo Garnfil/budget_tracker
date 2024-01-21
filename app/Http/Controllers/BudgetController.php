@@ -6,8 +6,11 @@ use App\DataTables\BudgetDataTable;
 use App\Http\Requests\Budget\StoreRequest;
 use App\Http\Requests\Budget\UpdateRequest;
 use App\Models\Budget;
+use App\Models\Expense;
+use App\Models\Income;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BudgetController extends Controller
 {
@@ -15,7 +18,7 @@ class BudgetController extends Controller
      * Display a listing of the resource.
      */
     public function index(BudgetDataTable $dataTable)
-    {
+    {   
         return $dataTable->render('budgets.index');
     }
 
@@ -35,6 +38,10 @@ class BudgetController extends Controller
     {   
         $data = $request->validated();
         $budget = Budget::create($data);
+
+        $budget->update([
+            'net_disposable_income' => $budget->initial_balance
+        ]);
 
         return redirect()->route('budgets.edit', $budget->id)->withSuccess("Budget added successfully.");
     }
@@ -64,7 +71,9 @@ class BudgetController extends Controller
     {   
         $data = $request->validated();
         $budget = Budget::findOrFail($id);
-        $budget->update($data);
+        $budget->update(array_merge($data, [
+            'net_disposable_income' => ($budget->net_disposable_income + $request->initial_balance) - $budget->initial_balance
+        ]));
 
         return back()->withSuccess('Budget updated successfully.');
     }
@@ -74,6 +83,29 @@ class BudgetController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $budget = Budget::findOrFail($id);
+
+        $budget->delete();
+
+        return response([
+            'status' => TRUE,
+            'message' => 'Budget deleted successfully.'
+        ], 200);
+    }
+
+    public function getAllBudgetInfo(Request $request) {
+        $id = $request->id;
+
+        $budget = Budget::where('id', $id)->first();
+        
+        $recent_expenses = Expense::where('budget_id', $budget->id)->limit(5)->latest()->get();
+        $recent_incomes = Income::where('budget_id', $budget->id)->limit(5)->latest()->get();
+        
+        return response([
+            'status' => TRUE,
+            'budget' => $budget,
+            'recent_expenses' => $recent_expenses,
+            'recent_incomes' => $recent_incomes
+        ], 200);
     }
 }

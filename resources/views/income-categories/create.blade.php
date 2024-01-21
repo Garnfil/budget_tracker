@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin-layout.app')
 
 @section('title', 'Add Income Category')
 

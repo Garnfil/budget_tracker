@@ -20,8 +20,12 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/vendors.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/forms/toggle/switchery.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ URL::asset('app-assets/vendors/css/forms/toggle/switchery.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/extensions/toastr.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/vendors/css/animate/animate.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ URL::asset('app-assets/vendors/css/extensions/sweetalert2.min.css') }}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -32,7 +36,8 @@
     <!-- END: Theme CSS-->
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ URL::asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/colors/palette-gradient.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/fonts/simple-line-icons/style.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/card-statistics.css') }}">
@@ -42,11 +47,10 @@
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/css/style.css') }}">
     <!-- END: Custom CSS-->
 
     @stack('datatable-styles')
-    @stack('component-styles')  
+    @stack('component-styles')
 
 </head>
 <!-- END: Head-->
@@ -232,7 +236,8 @@
                                 data-toggle="dropdown">
                                 <div class="avatar avatar-online"><img
                                         src="../../../app-assets/images/portrait/small/avatar-s-1.png"
-                                        alt="avatar"><i></i></div><span class="user-name">{{ auth()->user()->email }}</span>
+                                        alt="avatar"><i></i></div><span
+                                    class="user-name">{{ auth()->user()->email }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
                                     href="user-profile.html"><i class="feather icon-user"></i> Edit Profile</a><a
@@ -241,10 +246,10 @@
                                         class="feather icon-check-square"></i> Task</a><a class="dropdown-item"
                                     href="app-chat.html"><i class="feather icon-message-square"></i> Chats</a>
                                 <div class="dropdown-divider"></div>
-                                    <form action="{{ route('logout') }}" method="post">
-                                        @csrf
-                                        <button class="dropdown-item"><i class="feather icon-power"></i> Logout</button>
-                                    </form>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <button class="dropdown-item"><i class="feather icon-power"></i> Logout</button>
+                                </form>
                             </div>
                         </li>
                     </ul>
@@ -258,7 +263,7 @@
     <!-- BEGIN: Main Menu-->
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="main-menu-content">
-            @include('layouts.menu')
+            @include('layouts.admin-layout.menu')
         </div>
     </div>
     <!-- END: Main Menu-->
@@ -274,22 +279,22 @@
     <!-- BEGIN: Footer-->
     <footer class="footer footer-static footer-dark navbar-border">
         <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span
-                class="float-md-left d-block d-md-inline-block">Copyright &copy; 2020 <a
-                    class="text-bold-800 grey darken-2" href="https://1.envato.market/pixinvent_portfolio"
-                    target="_blank">PIXINVENT </a></span><span class="float-md-right d-none d-lg-block">Hand-crafted
-                & Made with <i class="feather icon-heart pink"></i></span></p>
+                class="float-md-left d-block d-md-inline-block">Copyright &copy; 2023 <a
+                    class="text-bold-800 grey darken-2" href="#" target="_blank">BUDGET TRACKER </a></span>>
+        </p>
     </footer>
     <!-- END: Footer-->
 
 
     <!-- BEGIN: Vendor JS-->
     <script src="{{ URL::asset('app-assets/vendors/js/vendors.min.js') }}"></script>
-    
+
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->
     <script src="{{ URL::asset('app-assets/vendors/js/charts/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ URL::asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
+    <script src="{{ URL::asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js') }}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -298,8 +303,11 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    
     <!-- END: Page JS-->
+
+    <!-- BEGIN: Custom JS-->
+    <script src="{{ asset('assets/js/custom-script.js') }}"></script>
+    <!-- END: Custom JS-->
 
     <!-- Toastr  -->
     @if (Session::get('success'))

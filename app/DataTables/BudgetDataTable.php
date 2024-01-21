@@ -24,7 +24,7 @@ class BudgetDataTable extends DataTable
         $dataTables = (new EloquentDataTable($query))
             ->addColumn('action', 'budget.action')->addColumn('action', function ($row) {
                 return '<a href="' .route('budgets.edit', $row->id). '" class="btn btn-sm btn-primary"><i class="feather icon-edit"></i></a>
-                        <button data-id="' .$row->id. '" class="btn btn-sm btn-danger"><i class="feather icon-trash"></i></button>';
+                        <button data-id="' .$row->id. '" class="btn btn-sm btn-danger delete-btn"><i class="feather icon-trash"></i></button>';
             })
             ->editColumn('user_id', function ($row) {
                 return optional($row->user)->name ?? optional($row->user)->email;
@@ -80,6 +80,7 @@ class BudgetDataTable extends DataTable
             ->serverSide(true)
             ->searching(false)
             ->ordering(false)
+            ->lengthChange(false)
             ->buttons([
                 Button::make('excel'),
                 Button::make('csv'),

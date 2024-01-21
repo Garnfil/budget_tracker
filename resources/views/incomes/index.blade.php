@@ -1,6 +1,6 @@
-@extends(( auth()->user()->role = 'client' ? 'layouts.client-layout.app' : 'layouts.admin-layout.app' ))
+@extends('layouts.admin-layout.app')
 
-@section('title', 'Budgets')
+@section('title', 'Incomes')
 
 @push('datatable-styles')
     @include('sections.datatable_css')
@@ -10,13 +10,13 @@
     <div class="content-wrapper">
         <div class="content-header row">
             <div class="content-header-left col-md-6 col-12 mb-2">
-                <h3 class="content-header-title mb-0">Budgets</h3>
+                <h3 class="content-header-title mb-0">Incomes</h3>
                 <div class="row breadcrumbs-top">
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a>
                             </li>
-                            <li class="breadcrumb-item active">Budgets
+                            <li class="breadcrumb-item active">Incomes
                             </li>
                         </ol>
                     </div>
@@ -24,7 +24,7 @@
             </div>
             <div class="content-header-right col-md-6 col-12 mb-md-0 mb-2">
                 <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
-                    <a href="{{ route('budgets.create') }}" class="btn btn-primary">Add Budget <i class="feather icon-plus"></i></a>
+                    <a href="{{ route('incomes.create') }}" class="btn btn-primary">Add Income <i class="feather icon-plus"></i></a>
                 </div>
             </div>
         </div>
@@ -34,13 +34,13 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <input type="text" class="form-control" id="search-text-field" placeholder="Search...">
-                        </div>
+                        </div>                        
                     </div>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
-                    {!! $dataTable->table(['class' => 'table table-striped']) !!}
+                    {!! $dataTable->table() !!}
                 </div>
             </div>
         </div>
@@ -49,16 +49,15 @@
 
 @push('scripts')
     @include('sections.datatable_js')
-    <script>
-
-        $('#budget-table').on('preXhr.dt', function(e, setting, data) {
+    <script>        
+        $('#income-table').on('preXhr.dt', function(e, setting, data) {
             var searchText = $('#search-text-field').val();
 
             data['searchText'] = searchText;
         });
 
         function showTable() {
-            window.LaravelDataTables['budget-table'].draw(false);
+            window.LaravelDataTables['income-table'].draw(false);
         }
 
         $('#search-text-field').on('input', function(e) {
@@ -66,12 +65,12 @@
         })
 
         // For deleting data
-        $('#budget-table').on('click', '.delete-btn', function (e) {
+        $('#income-table').on('click', '.delete-btn', function (e) {
             let data_id = $(this).attr('data-id');
             renderSweetAlert({
                 title: 'Are you sure you want to delete?',
                 ajax: {
-                    url: `{{ route('budgets.destroy', '') }}/${data_id}`,
+                    url: `{{ route('incomes.destroy', '') }}/${data_id}`,
                     method: "DELETE",
                     data: {
                         _token: "{{ csrf_token() }}",

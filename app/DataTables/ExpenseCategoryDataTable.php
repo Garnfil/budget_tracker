@@ -23,7 +23,10 @@ class ExpenseCategoryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->editColumn('budget_id', function ($row) {
-                return $row->budget->user->name ?? null;
+                return ($row->budget->user->name ?? null) . ' ' . '(' . ($row->budget->start_date->format('F d, Y') . ' - ' . $row->budget->end_date->format('F d, Y')) . ')';
+            })
+            ->editColumn('budgeted_amount', function ($row) {
+                return '₱' . ' ' . number_format($row->budgeted_amount, 2);
             })
             ->addColumn('action', function ($row) {
                 return '<a href="' .route('expense-categories.edit', $row->id). '" class="btn btn-sm btn-primary"><i class="feather icon-edit"></i></a>
@@ -55,7 +58,8 @@ class ExpenseCategoryDataTable extends DataTable
                     ->responsive()
                     ->serverSide(true)
                     ->searching(false)
-                    ->ordering(false)
+                    ->ordering(true)
+                    ->lengthChange(false)
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),

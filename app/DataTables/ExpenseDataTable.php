@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\IncomeCategory;
+use App\Models\Expense;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class IncomeCategoryDataTable extends DataTable
+class ExpenseDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,13 +23,16 @@ class IncomeCategoryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->editColumn('budget_id', function ($row) {
-                return ($row->budget->user->name ?? null) . ' ' . ($row->budget->start_date->format('F d, Y') . ' - ' . $row->budget->end_date->format('F d, Y'));
+                return ($row->budget->user->name ?? null) . ' ' . '(' . ($row->budget->start_date->format('F d, Y') . ' - ' . $row->budget->end_date->format('F d, Y')) . ')';
             })
-            ->editColumn('goal_amount', function ($row) {
-                return '₱' . ' ' . number_format($row->goal_amount, 2);
+            ->editColumn('expense_category_id', function($row) {
+                return $row->expense_category->name ?? null;
+            })
+            ->editColumn('amount', function($row) {
+                return '₱' . ' ' . number_format($row->amount, 2);
             })
             ->addColumn('action', function ($row) {
-                return '<a href="' .route('income-categories.edit', $row->id). '" class="btn btn-sm btn-primary"><i class="feather icon-edit"></i></a>
+                return '<a href="' .route('expenses.edit', $row->id). '" class="btn btn-sm btn-primary"><i class="feather icon-edit"></i></a>
                         <button data-id="' .$row->id. '" class="btn btn-sm btn-danger delete-btn"><i class="feather icon-trash"></i></button>';
             })
             ->setRowId('id');
@@ -38,9 +41,9 @@ class IncomeCategoryDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(IncomeCategory $model): QueryBuilder
+    public function query(Expense $model): QueryBuilder
     {
-        return $model->with('budget', 'budget.user');
+        return $model->with('budget', 'expense_category');
     }
 
     /**
@@ -49,17 +52,16 @@ class IncomeCategoryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('income-category-table')
+                    ->setTableId('expense-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
                     ->orderBy(0)
-                    ->selectStyleSingle()
                     ->responsive()
-                    ->serverSide(true)
+                    ->serverSide()
                     ->searching(false)
-                    ->ordering(true)
                     ->lengthChange(false)
+                    ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),
@@ -78,12 +80,13 @@ class IncomeCategoryDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('budget_id')->data('budget_id')->name('budget_id')->title('Client Budget'),
-            Column::make('name'),
-            Column::make('goal_amount'),
+            Column::make('title'),
+            Column::make('expense_category_id')->data('expense_category_id')->name('expense_category_id')->title('Expense Category'),
+            Column::make('amount'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(70)
+                  ->width(90)
                   ->addClass('text-center'),
         ];
     }
@@ -93,6 +96,6 @@ class IncomeCategoryDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'IncomeCategory_' . date('YmdHis');
+        return 'Expense_' . date('YmdHis');
     }
 }

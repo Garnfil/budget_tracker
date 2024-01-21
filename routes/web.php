@@ -35,11 +35,15 @@ Route::group(['middleware' => ['verified', 'auth'], 'prefix' => 'account'], func
     Route::resource('admins', AdminController::class);
 
     Route::resource('budgets', BudgetController::class);
+    Route::get('budgets/all/{id}', [BudgetController::class, 'getAllBudgetInfo'])->name('budgets.all-info');
 
     Route::resource('income-categories', IncomeCategoryController::class);
+    Route::get('income-categories/lookup/{q?}', [IncomeCategoryController::class, 'lookup'])->name('income-categories.lookup');
+
     Route::resource('expense-categories', ExpenseCategoryController::class);
+    Route::get('expense-categories/lookup/{q?}', [ExpenseCategoryController::class, 'lookup'])->name('expense-categories.lookup');
 
     Route::resource('incomes', IncomeController::class);
-    Route::resource('expenses', ExpenseController::class);
 
+    Route::resource('expenses', ExpenseController::class);
 });
