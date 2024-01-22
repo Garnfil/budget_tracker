@@ -27,7 +27,10 @@ class BudgetController extends Controller
      */
     public function create()
     {   
+        $user = Auth::user();
         $clients = User::where('role', 'client')->get();
+
+        if($user->role == 'client') $clients = User::where('id', $user->id)->get();
         return view('budgets.create', compact('clients'));
     }
 
@@ -84,6 +87,17 @@ class BudgetController extends Controller
     public function destroy(string $id)
     {
         $budget = Budget::findOrFail($id);
+
+        $user = Auth::user();
+        $user_budgets = Budget::where('user_id', $user->id)->count();
+
+        if($user_budgets <= 1) {
+            return response([
+                'status' => FALSE,
+                'message' => 'Your budget is only one, please add another budget to remove this budget.',
+                'budget' => null
+            ], 200);
+        }
 
         $budget->delete();
 

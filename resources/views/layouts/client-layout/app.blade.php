@@ -39,6 +39,7 @@
     <link rel="stylesheet" type="text/css"
         href="{{ URL::asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/core/colors/palette-gradient.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('app-assets/css/core/colors/palette-callout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/fonts/simple-line-icons/style.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/card-statistics.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('app-assets/css/pages/vertical-timeline.css') }}">
@@ -71,7 +72,7 @@
                             class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i
                                 class="feather icon-menu font-large-1"></i></a></li>
                     <li class="nav-item"><a class="navbar-brand"
-                            href="../../../html/ltr/horizontal-menu-template/index.html">
+                            href="{{ route('dashboard') }}">
                             <h2 class="brand-text">Budget Tracker</h2>
                         </a></li>
                     <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse"
@@ -121,7 +122,7 @@
                                         alt="avatar"><i></i></div><span class="user-name">{{ auth()->user()->email }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="user-profile.html">
+                                <a class="dropdown-item" href="{{ route('profile.index') }}">
                                     <i class="feather icon-user"></i> Edit Profile
                                 </a>
                                 <div class="dropdown-divider"></div>

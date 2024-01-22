@@ -46,4 +46,7 @@ Route::group(['middleware' => ['verified', 'auth'], 'prefix' => 'account'], func
     Route::resource('incomes', IncomeController::class);
 
     Route::resource('expenses', ExpenseController::class);
+
+    Route::get('profile', [DashboardController::class, 'profile'])->name('profile.index');
+    Route::put('profile/{id}', [DashboardController::class, 'updateProfile'])->name('profile.put');
 });

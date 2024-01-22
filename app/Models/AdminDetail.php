@@ -10,6 +10,6 @@ class AdminDetail extends Model
     use HasFactory;
     protected $table = "admin_details";
     protected $fillable = [
-        "user_id"
+        "user_id",
     ];
 }

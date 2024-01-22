@@ -1,4 +1,4 @@
-@extends(( auth()->user()->role = 'client' ? 'layouts.client-layout.app' : 'layouts.admin-layout.app' ))
+@extends(( auth()->user()->role == 'client' ? 'layouts.client-layout.app' : 'layouts.admin-layout.app' ))
 
 @section('title', 'Add Budget')
 
@@ -42,7 +42,7 @@
             <div class="card">
                 <div class="card-body">
                     @if ($errors->any())
-                        <div class="alert alert-danger">Invalid Fields. Please check all fields before submitting the form.</div>
+                        <div class="bs-callout-pink callout-border-left my-1 p-1">Invalid Fields. Please check all fields before submitting the form.</div>
                     @endif
                     <form action="{{ route('budgets.store') }}" method="post">
                         @csrf
@@ -101,7 +101,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label for="description" class="form-label">Description</label>
-                                            <textarea name="desription" id="description-field" cols="30" rows="3" class="form-control"></textarea>
+                                            <textarea name="desription" id="description-field" cols="30" rows="1" class="form-control"></textarea>
                                             <div class="text-danger danger">@error('description'){{ $message }}@enderror</div>
                                         </div>
                                     </div>

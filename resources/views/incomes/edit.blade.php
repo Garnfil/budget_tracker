@@ -1,4 +1,4 @@
-@extends('layouts.admin-layout.app')
+@extends(( auth()->user()->role == 'client' ? 'layouts.client-layout.app' : 'layouts.admin-layout.app' ))
 
 @section('title', 'Edit Income')
 
@@ -35,6 +35,9 @@
         <div class="content-body">
             <div class="card">
                 <div class="card-body">
+                    @if ($errors->any())
+                        <div class="bs-callout-pink callout-border-left my-1 p-1">Invalid Fields. Please check all fields before submitting the form.</div>
+                    @endif
                     <form action="{{ route('incomes.update', $income->id) }}" method="post">
                         @csrf
                         @method("PUT")

@@ -23,7 +23,7 @@ function renderSweetAlert(options) {
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
                         Swal.fire({
-                            title: textStatus,
+                            title: textStatus.toUpperCase(),
                             text: errorThrown,
                             type: 'error'
                         })
@@ -36,7 +36,9 @@ function renderSweetAlert(options) {
         }).then(function (result) {
             if(result.dismiss === Swal.DismissReason.cancel) {
                 return; 
-            } else if (result.value.status) {
+            } 
+            
+            if (result.value.status) {
                 Swal.fire({
                     title: 'Success',
                     text: result.value.message ?? '',
@@ -47,6 +49,12 @@ function renderSweetAlert(options) {
                     } else {
                         location.reload();
                     }
+                })
+            } else {
+                Swal.fire({
+                    title: 'FAILED',
+                    text: result.value.message ?? '',
+                    type: 'warning'
                 })
             }
 
